@@ -1,0 +1,40 @@
+<div class="admin-login-page">
+  <div class="admin-login-card">
+    <h1>Admin Login</h1>
+    <p class="subtitle">Restricted access</p>
+
+    <div *ngIf="errorMessage" class="message error">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="statusMessage" class="message success">
+      {{ statusMessage }}
+    </div>
+
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input
+        id="username"
+        type="text"
+        [(ngModel)]="username"
+        placeholder="Enter username"
+        [disabled]="isSubmitting"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        id="password"
+        type="password"
+        [(ngModel)]="password"
+        placeholder="Enter password"
+        [disabled]="isSubmitting"
+      />
+    </div>
+
+    <button type="button" (click)="submit()" [disabled]="isSubmitting">
+      {{ isSubmitting ? 'Signing in...' : 'Log In' }}
+    </button>
+  </div>
+</div>

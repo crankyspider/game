@@ -1,0 +1,253 @@
+app-path-finder {
+  font-family: 'Gilroy', sans-serif;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(rgba(21, 27, 48, 0.97), rgba(21, 27, 48, 0.97));
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  height: 100vh;
+  margin: 0;
+  color: #fff;
+  user-select: none;
+  background-image: url('/assets/images/background.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+}
+
+.background-blur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  filter: blur(5px);
+  z-index: -1;
+}
+
+.hack-box-container {
+  position: relative;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 2.5vh auto;
+  width: fit-content;
+  overflow: hidden;
+  max-height: 95vh;
+  max-width: 95vw;
+  background-color: rgb(7, 19, 32);
+}
+
+#grid-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#title-container {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  background-color: rgb(7, 19, 32);
+  padding: 10px;
+  width: calc(70px * 9 + 104px);
+  max-width: 100%;
+  border-radius: 0.75rem 0.75rem 0 0;
+}
+
+#title-container h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: rgb(127, 255, 191);
+  text-shadow: 0 0 40px rgb(127, 255, 191);
+  font-weight: normal;
+  margin-right: 10px;
+}
+
+#title-container p {
+  margin: 0;
+  font-size: 1rem;
+  color: rgb(142, 142, 142);
+}
+
+.info-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-left: 20px;
+}
+
+.info-container h2 {
+  font-size: 1.5rem;
+  color: rgb(84, 255, 164);
+  text-shadow: 0 0 2.1px rgb(127, 255, 191);
+}
+
+.info-container p {
+  font-size: 1rem;
+  color: rgb(142, 142, 142);
+}
+
+.outer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(7, 19, 32);
+}
+
+.hack-box {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  margin: 0 0.75rem 1rem 0.75rem;
+}
+
+#grid-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#grid {
+  display: grid;
+  width: calc(70px * 9 + 104px);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(22, 40, 52);
+  border-radius: 0.75rem;
+  max-width: 100%;
+  gap: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.cell {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1b1e24;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  border-radius: 0.5rem;
+}
+
+.cell span {
+  position: absolute;
+  font-weight: bold;
+  color: black;
+}
+
+.start-cell-yellow,
+.start-cell-blue,
+.start-cell-red,
+.start-cell-green {
+  font-weight: bold;
+}
+
+.start-cell-yellow {
+  background-color: #ffd700;
+  color: black;
+}
+
+.end-cell-yellow {
+  background-color: #ffd700;
+}
+
+.start-cell-blue {
+  background-color: #1e90ff;
+  color: white;
+}
+
+.end-cell-blue {
+  background-color: #1e90ff;
+}
+
+.start-cell-red {
+  background-color: #ff4500;
+  color: white;
+}
+
+.end-cell-red {
+  background-color: #ff4500;
+}
+
+.start-cell-green {
+  background-color: #32cd32;
+  color: white;
+}
+
+.end-cell-green {
+  background-color: #32cd32;
+}
+
+.block-cell {
+  background-color: gray;
+}
+
+.progress-bar-container {
+  width: calc(70px * 9 + 104px);
+  display: flex;
+  justify-content: center;
+  background-color: rgb(7, 19, 32);
+  padding-top: 0;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 0 0 0.75rem 0.75rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background-color: rgb(15, 27, 33);
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress {
+  height: 100%;
+  background-color: rgb(255, 69, 0);
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: width 0.1s linear;
+}
+
+.hide-cursor {
+  cursor: none !important;
+}
+
+.highlight-yellow {
+  outline: 3px solid #ffd700;
+}
+
+.highlight-blue {
+  outline: 3px solid #1e90ff;
+}
+
+.highlight-red {
+  outline: 3px solid #ff4500;
+}
+
+.highlight-green {
+  outline: 3px solid #32cd32;
+}

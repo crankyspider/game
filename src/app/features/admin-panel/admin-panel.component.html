@@ -1,0 +1,127 @@
+<div class="admin-page">
+  <div class="admin-header">
+    <h1>Admin Panel</h1>
+    <button class="logout-btn" (click)="logout()">Log Out</button>
+  </div>
+
+  <div *ngIf="errorMessage" class="message error">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="successMessage" class="message success">
+    {{ successMessage }}
+  </div>
+
+  <section class="admin-card">
+    <h2>Create Player</h2>
+
+    <div class="form-grid">
+      <input
+        type="text"
+        placeholder="State ID"
+        [(ngModel)]="newPlayer.stateId"
+        (input)="sanitizeNewPlayerField('stateId')"
+        maxlength="4"
+      />
+
+      <input
+        type="text"
+        placeholder="Code Part 1"
+        [(ngModel)]="newPlayer.codePart1"
+        (input)="sanitizeNewPlayerField('codePart1')"
+        maxlength="4"
+      />
+
+      <input
+        type="text"
+        placeholder="Code Part 2"
+        [(ngModel)]="newPlayer.codePart2"
+        (input)="sanitizeNewPlayerField('codePart2')"
+        maxlength="4"
+      />
+
+      <button class="primary-btn" (click)="createPlayer()">Create Player</button>
+    </div>
+  </section>
+
+  <section class="admin-card">
+    <div class="players-header">
+      <h2>Players</h2>
+      <button class="secondary-btn" (click)="loadPlayers()">Refresh</button>
+    </div>
+
+    <div *ngIf="isLoading" class="loading">Loading players...</div>
+
+    <div *ngIf="!isLoading && players.length === 0" class="empty-state">
+      No players found.
+    </div>
+
+    <div *ngIf="!isLoading && players.length > 0" class="players-table-wrapper">
+      <table class="players-table">
+        <thead>
+          <tr>
+            <th>State ID</th>
+            <th>Code 1</th>
+            <th>Code 2</th>
+            <th>Attempt Active</th>
+            <th>Stage</th>
+            <th>Progress</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let player of players">
+            <td>{{ player.stateId }}</td>
+
+            <td>
+              <input
+                type="text"
+                [(ngModel)]="player.codePart1"
+                maxlength="4"
+              />
+            </td>
+
+            <td>
+              <input
+                type="text"
+                [(ngModel)]="player.codePart2"
+                maxlength="4"
+              />
+            </td>
+
+            <td>
+              <input
+                type="checkbox"
+                [(ngModel)]="player.activeAttempt"
+                (change)="toggleAttempt(player)"
+              />
+            </td>
+
+            <td>
+              <input
+                type="number"
+                [(ngModel)]="player.stage"
+                min="0"
+              />
+            </td>
+
+            <td>
+              <input
+                type="number"
+                [(ngModel)]="player.progress"
+                min="0"
+              />
+            </td>
+
+            <td class="actions">
+              <button class="save-btn" (click)="savePlayer(player)">Save</button>
+              <button class="regen-btn" (click)="regenerateCode(player)">Regen Code</button>
+              <button class="delete-btn" (click)="deletePlayer(player)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

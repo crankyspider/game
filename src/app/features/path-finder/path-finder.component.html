@@ -1,0 +1,32 @@
+<div class="background-blur"></div>
+
+<div class="hack-box-container">
+  <div id="grid-container">
+    <div id="title-container">
+      <h1>Gridlocked</h1>
+      <p>Find the correct path</p>
+    </div>
+
+    <div id="grid" #gridRef></div>
+
+    <div class="progress-bar-container">
+      <div class="progress-bar">
+        <div id="progress" class="progress" #progressRef></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<audio
+  id="move-sound"
+  #moveSoundRef
+  src="/assets/audio/mixkit-arcade-game-jump-coin-216.wav"
+  preload="auto"
+></audio>
+
+<audio
+  id="complete-sound"
+  #completeSoundRef
+  src="/assets/audio/mixkit-retro-game-notification-212.wav"
+  preload="auto"
+></audio>

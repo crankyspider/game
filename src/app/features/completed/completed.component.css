@@ -1,0 +1,109 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.completed-page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top, rgba(0, 255, 180, 0.08), transparent 35%),
+    radial-gradient(circle at bottom, rgba(255, 60, 60, 0.06), transparent 35%),
+    linear-gradient(180deg, #05070b 0%, #0a0f16 100%);
+  color: #f3f7fb;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.03) 0,
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 2px,
+      transparent 4px
+    );
+  opacity: 0.18;
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  width: min(760px, 92vw);
+  padding: 40px 32px;
+  text-align: center;
+  border: 1px solid rgba(110, 255, 220, 0.16);
+  background: rgba(8, 12, 18, 0.78);
+  box-shadow:
+    0 0 30px rgba(0, 255, 180, 0.08),
+    inset 0 0 20px rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(8px);
+}
+
+.eyebrow {
+  font-size: 0.85rem;
+  letter-spacing: 0.28em;
+  color: #89ffe5;
+  margin-bottom: 18px;
+}
+
+h1 {
+  margin: 0 0 18px;
+  font-size: clamp(2.2rem, 5vw, 4.5rem);
+  letter-spacing: 0.14em;
+  color: #ff6262;
+  text-shadow: 0 0 18px rgba(255, 98, 98, 0.25);
+}
+
+.message {
+  margin: 0 auto 28px;
+  max-width: 620px;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(243, 247, 251, 0.88);
+}
+
+.status-box {
+  margin: 0 auto 30px;
+  padding: 18px 20px;
+  max-width: 480px;
+  border: 1px solid rgba(110, 255, 220, 0.16);
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.status-label {
+  font-size: 0.8rem;
+  letter-spacing: 0.24em;
+  color: rgba(137, 255, 229, 0.72);
+  margin-bottom: 10px;
+}
+
+.status-value {
+  font-size: 1.1rem;
+  letter-spacing: 0.16em;
+  color: #d8fff7;
+}
+
+.continue-btn {
+  border: 1px solid rgba(255, 98, 98, 0.34);
+  background: rgba(255, 98, 98, 0.12);
+  color: #fff;
+  padding: 14px 26px;
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.continue-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 98, 98, 0.18);
+  box-shadow: 0 0 18px rgba(255, 98, 98, 0.16);
+}

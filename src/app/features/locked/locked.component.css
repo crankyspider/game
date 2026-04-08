@@ -1,0 +1,170 @@
+:host {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.locked-page {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.78)),
+    url('/assets/locked-bg.png') center center / cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(0, 255, 180, 0.06), rgba(255, 0, 0, 0.04), transparent 70%);
+  pointer-events: none;
+}
+
+.scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.12;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.06) 0px,
+    rgba(255, 255, 255, 0.06) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+  animation: scanMove 8s linear infinite;
+}
+
+.noise {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.2) 0 1px, transparent 1px),
+    radial-gradient(circle at 80% 40%, rgba(255,255,255,0.18) 0 1px, transparent 1px),
+    radial-gradient(circle at 50% 80%, rgba(255,255,255,0.15) 0 1px, transparent 1px);
+  animation: noiseShift 0.3s infinite alternate;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 32px;
+  max-width: 1000px;
+}
+
+.warning {
+  font-size: clamp(2.6rem, 6vw, 6rem);
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: #ff4d4d;
+  text-shadow:
+    0 0 10px rgba(255, 77, 77, 0.8),
+    0 0 30px rgba(255, 77, 77, 0.45);
+  margin-bottom: 22px;
+}
+
+.subtext {
+  font-size: clamp(1rem, 2vw, 1.6rem);
+  letter-spacing: 0.22em;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 48px;
+}
+
+.player-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 28px;
+  border: 1px solid rgba(0, 255, 180, 0.28);
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  box-shadow:
+    0 0 20px rgba(0, 255, 180, 0.15),
+    inset 0 0 20px rgba(0, 255, 180, 0.05);
+}
+
+.label {
+  font-size: clamp(1rem, 2vw, 2rem);
+  letter-spacing: 0.18em;
+  color: #baffee;
+}
+
+.count {
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  font-weight: 800;
+  color: #d8fff7;
+  text-shadow: 0 0 18px rgba(130, 255, 230, 0.45);
+  min-width: 80px;
+  display: inline-block;
+}
+
+.pulse {
+  animation: pulseGlow 2.2s ease-in-out infinite;
+}
+
+.flicker {
+  animation: flicker 3s infinite;
+}
+
+.glow {
+  animation: playerGlow 3s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.92;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.015);
+  }
+}
+
+@keyframes flicker {
+  0%, 18%, 22%, 62%, 64%, 100% {
+    opacity: 1;
+  }
+  20%, 63% {
+    opacity: 0.45;
+  }
+}
+
+@keyframes scanMove {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(8px);
+  }
+}
+
+@keyframes noiseShift {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(2px, -2px);
+  }
+}
+
+@keyframes playerGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 18px rgba(0, 255, 180, 0.12),
+      inset 0 0 18px rgba(0, 255, 180, 0.05);
+  }
+  50% {
+    box-shadow:
+      0 0 30px rgba(0, 255, 180, 0.26),
+      inset 0 0 24px rgba(0, 255, 180, 0.08);
+  }
+}
