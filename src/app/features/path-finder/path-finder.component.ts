@@ -209,6 +209,7 @@ constructor(
         }
 
         if (this.timeoutSound) {
+           this.timeoutSound.volume = 0.7; // 70%
   this.timeoutSound.currentTime = 0;
   this.timeoutSound.play().catch(err =>
     console.error('Error playing timeout sound:', err)
