@@ -208,7 +208,13 @@ constructor(
           this.blockMoveInterval = null;
         }
 
-        alert('Time is up! You lose.');
+        if (this.timeoutSound) {
+  this.timeoutSound.currentTime = 0;
+  this.timeoutSound.play().catch(err =>
+    console.error('Error playing timeout sound:', err)
+  );
+}
+
         this.level = 1;
         this.initializeGrid();
       }
