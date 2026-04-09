@@ -59,8 +59,10 @@ export class AdminPanelComponent implements OnInit {
     this.newPlayer[field] = this.newPlayer[field]
       .toUpperCase()
       .replace(/[^A-Z0-9]/g, '')
-      .slice(0, 4);
+      .slice(0, 6);
   }
+
+  
 
   async createPlayer(): Promise<void> {
     try {
@@ -70,6 +72,11 @@ export class AdminPanelComponent implements OnInit {
       const stateId = this.newPlayer.stateId.trim().toUpperCase();
       const codePart1 = this.newPlayer.codePart1.trim().toUpperCase();
       const codePart2 = this.newPlayer.codePart2.trim().toUpperCase(); // ✅ FIXED
+
+      if (!/^\d{1,6}$/.test(stateId)) {
+  this.errorMessage = 'State ID must be up to 6 digits.';
+  return;
+}
 
       if (!stateId || !codePart1 || !codePart2) {
         this.errorMessage = 'All new player fields are required.';
