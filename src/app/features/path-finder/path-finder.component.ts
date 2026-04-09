@@ -47,6 +47,8 @@ export class PathFinderComponent implements AfterViewInit, OnDestroy {
   @ViewChild('progressRef') progressRef?: ElementRef<HTMLDivElement>;
   @ViewChild('moveSoundRef') moveSoundRef?: ElementRef<HTMLAudioElement>;
   @ViewChild('completeSoundRef') completeSoundRef?: ElementRef<HTMLAudioElement>;
+  @ViewChild('timeoutSoundRef') timeoutSoundRef?: ElementRef<HTMLAudioElement>;
+
 
 constructor(
   private playerService: PlayerService,
@@ -59,9 +61,9 @@ constructor(
   private readonly levels: LevelConfig[] = [
     { gridSize: 9, colors: 4, blockMoveSpeed: 500, timerDuration: 9000, minMoves: 5, maxMoves: 7 },
     { gridSize: 9, colors: 4, blockMoveSpeed: 490, timerDuration: 9000, minMoves: 8, maxMoves: 9 },
-    { gridSize: 9, colors: 4, blockMoveSpeed: 480, timerDuration: 13000, minMoves: 10, maxMoves: 11 },
-    { gridSize: 9, colors: 4, blockMoveSpeed: 450, timerDuration: 18500, minMoves: 11, maxMoves: 12 },
-    { gridSize: 9, colors: 4, blockMoveSpeed: 425, timerDuration: 20000, minMoves: 13, maxMoves: 13 }
+    { gridSize: 9, colors: 4, blockMoveSpeed: 480, timerDuration: 11000, minMoves: 10, maxMoves: 11 },
+    { gridSize: 9, colors: 4, blockMoveSpeed: 450, timerDuration: 15500, minMoves: 11, maxMoves: 12 },
+    { gridSize: 9, colors: 4, blockMoveSpeed: 425, timerDuration: 17500, minMoves: 13, maxMoves: 13 }
 
   ];
 
@@ -121,6 +123,10 @@ constructor(
   private get completeSound(): HTMLAudioElement | null {
     return this.completeSoundRef?.nativeElement ?? null;
   }
+
+  private get timeoutSound(): HTMLAudioElement | null {
+  return this.timeoutSoundRef?.nativeElement ?? null;
+}
 
   private initializeGrid(): void {
     const grid = this.grid;
