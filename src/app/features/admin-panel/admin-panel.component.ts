@@ -55,12 +55,18 @@ export class AdminPanelComponent implements OnInit {
     }
   }
 
-  sanitizeNewPlayerField(field: 'stateId' | 'codePart1' | 'codePart2'): void {
+sanitizeNewPlayerField(field: 'stateId' | 'codePart1' | 'codePart2'): void {
+  if (field === 'stateId') {
+    this.newPlayer.stateId = this.newPlayer.stateId
+      .replace(/\D/g, '')
+      .slice(0, 6);
+  } else {
     this.newPlayer[field] = this.newPlayer[field]
       .toUpperCase()
       .replace(/[^A-Z0-9]/g, '')
-      .slice(0, 6);
+      .slice(0, 4);
   }
+}
 
   
 
