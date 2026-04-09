@@ -57,7 +57,10 @@ constructor(
   private readonly possibleColors: GameColor[] = ['yellow', 'blue', 'red', 'green'];
 
   private readonly levels: LevelConfig[] = [
-    { gridSize: 9, colors: 4, blockMoveSpeed: 475, timerDuration: 15500, minMoves: 1, maxMoves: 2 }
+    { gridSize: 9, colors: 4, blockMoveSpeed: 9000, timerDuration: 15500, minMoves: 5, maxMoves: 7 },
+    { gridSize: 9, colors: 4, blockMoveSpeed: 10000, timerDuration: 15500, minMoves: 10, maxMoves: 12 },
+    { gridSize: 9, colors: 4, blockMoveSpeed: 13000, timerDuration: 15500, minMoves: 12, maxMoves: 13 },
+    { gridSize: 9, colors: 4, blockMoveSpeed: 15000, timerDuration: 15500, minMoves: 13, maxMoves: 13 }
 
   ];
 
