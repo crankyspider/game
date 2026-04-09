@@ -59,8 +59,8 @@ constructor(
   private readonly levels: LevelConfig[] = [
     { gridSize: 9, colors: 4, blockMoveSpeed: 425, timerDuration: 9000, minMoves: 5, maxMoves: 7 },
     { gridSize: 9, colors: 4, blockMoveSpeed: 425, timerDuration: 13000, minMoves: 10, maxMoves: 12 },
-    { gridSize: 9, colors: 4, blockMoveSpeed: 425, timerDuration: 17000, minMoves: 12, maxMoves: 13 },
-    { gridSize: 9, colors: 4, blockMoveSpeed: 425, timerDuration: 16500, minMoves: 13, maxMoves: 13 }
+    { gridSize: 9, colors: 4, blockMoveSpeed: 425, timerDuration: 18500, minMoves: 12, maxMoves: 13 },
+    { gridSize: 9, colors: 4, blockMoveSpeed: 425, timerDuration: 20000, minMoves: 13, maxMoves: 13 }
 
   ];
 
