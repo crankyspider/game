@@ -83,7 +83,7 @@ constructor(
   private readonly minBlocks = 4;
   private readonly maxBlocks = 7;
   private readonly blockLifespan = 1;
-  private blockProbabilitySetting = 0.1;
+  private blockProbabilitySetting = 31;
 
   private cleanupFns: Array<() => void> = [];
 
