@@ -61,7 +61,7 @@ constructor(
   private readonly levels: LevelConfig[] = [
     { gridSize: 9, colors: 4, blockMoveSpeed: 500, timerDuration: 9000, minMoves: 5, maxMoves: 7 },
     { gridSize: 9, colors: 4, blockMoveSpeed: 475, timerDuration: 9000, minMoves: 8, maxMoves: 9 },
-    { gridSize: 9, colors: 4, blockMoveSpeed: 475, timerDuration: 11000, minMoves: 10, maxMoves: 11 },
+    { gridSize: 9, colors: 4, blockMoveSpeed: 475, timerDuration: 12000, minMoves: 10, maxMoves: 11 },
     { gridSize: 9, colors: 4, blockMoveSpeed: 475, timerDuration: 15500, minMoves: 11, maxMoves: 12 },
     { gridSize: 9, colors: 4, blockMoveSpeed: 475, timerDuration: 17500, minMoves: 13, maxMoves: 13 }
 
@@ -82,7 +82,7 @@ constructor(
 
   private readonly minBlocks = 4;
   private readonly maxBlocks = 7;
-  private readonly blockLifespan = 100;
+  private readonly blockLifespan = 80;
   private blockProbabilitySetting = 0.1;
 
   private cleanupFns: Array<() => void> = [];
