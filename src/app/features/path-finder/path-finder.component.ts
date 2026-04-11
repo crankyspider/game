@@ -60,7 +60,7 @@ constructor(
 
   private readonly levels: LevelConfig[] = [
     { gridSize: 9, colors: 4, blockMoveSpeed: 350, timerDuration: 9000, minMoves: 5, maxMoves: 7 },
-    { gridSize: 9, colors: 4, blockMoveSpeed: 350, timerDuration: 9000, minMoves: 8, maxMoves: 9 },
+    { gridSize: 9, colors: 4, blockMoveSpeed: 350, timerDuration: 11000, minMoves: 8, maxMoves: 9 },
     { gridSize: 9, colors: 4, blockMoveSpeed: 380, timerDuration: 14500, minMoves: 10, maxMoves: 11 },
     { gridSize: 9, colors: 4, blockMoveSpeed: 400, timerDuration: 15500, minMoves: 11, maxMoves: 12 },
     { gridSize: 9, colors: 4, blockMoveSpeed: 425, timerDuration: 17500, minMoves: 13, maxMoves: 13 }
