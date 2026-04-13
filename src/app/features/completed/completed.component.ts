@@ -16,9 +16,10 @@ export class CompletedComponent {
     private auth: AuthService
   ) {}
 
-  continue(): void {
-    const stage = this.auth.getStage();
-    const redirectTo = this.auth.getRedirectRouteByStage(stage);
-    this.router.navigateByUrl(redirectTo);
-  }
+continue(): void {
+  this.auth.logout();
+  localStorage.clear();
+  sessionStorage.clear();
+  this.router.navigate(['/login']);
+}
 }
