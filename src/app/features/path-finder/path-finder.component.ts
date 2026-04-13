@@ -762,7 +762,7 @@ private checkWinCondition(): void {
       this.auth.setCurrentUser(updatedPlayer);
       this.auth.setStage(2);
 
-      await this.router.navigate(['/completed']);
+      await this.router.navigate(['/dashboard']);
     } catch (err) {
       console.error('Error completing game:', err);
       this.isFinishingGame = false;

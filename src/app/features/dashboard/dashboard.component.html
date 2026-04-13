@@ -1,0 +1,54 @@
+<div class="dashboard-page">
+  <div class="background-layer"></div>
+  <div class="overlay"></div>
+
+  <div class="dashboard-shell">
+    <div class="dashboard-header">
+      <div>
+        <div class="eyebrow">MISSION HUB</div>
+        <h1>Available Trials</h1>
+       <p class="subtext">
+  State ID: <strong>{{ currentUser?.stateId || '----' }}</strong>
+  <span class="divider">•</span>
+  Access level:
+  <span class="stage-badge">STAGE {{ stage }}</span>
+</p>
+      </div>
+
+      <button class="logout-btn" (click)="logout()">Log Out</button>
+    </div>
+
+    <div class="games-grid">
+      <div
+        class="game-card"
+        *ngFor="let game of games"
+        [class.locked]="!isUnlocked(game.requiredStage)"
+        [class.available]="isUnlocked(game.requiredStage)"
+        [class.completed]="isCompleted(game)"
+      >
+        <div class="card-top">
+          <div class="card-title-row">
+            <h2>{{ game.title }}</h2>
+            <span class="status-pill">
+              {{ getStatus(game) }}
+            </span>
+          </div>
+
+          <p>{{ game.description }}</p>
+        </div>
+
+        <div class="card-meta">
+          <span>Requires Stage {{ game.requiredStage }}</span>
+        </div>
+
+        <button
+          class="enter-btn"
+          [disabled]="!isUnlocked(game.requiredStage)"
+          (click)="openGame(game)"
+        >
+          {{ isUnlocked(game.requiredStage) ? 'Enter' : 'Locked' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

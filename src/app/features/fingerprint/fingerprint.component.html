@@ -1,0 +1,64 @@
+<div class="background-blur"></div>
+
+<div class="hack-box-container">
+  <div id="grid-container">
+    <div id="title-container">
+      <img src="/assets/images/gamePad.svg" alt="Title Image">
+      <h1>Defuse the Device</h1>
+      <p>Select the correct sections to defuse the device.</p>
+    </div>
+
+    <div id="grid">
+      <div id="main-image-container">
+        <h2 id="image-title">Clone Target</h2>
+        <canvas #mainCanvas id="main-image"></canvas>
+
+        <div id="attempts-container">
+          <p>Access Attempts</p>
+          <div id="attempts">
+            <div
+              class="attempt-box"
+              *ngFor="let slot of attemptSlots"
+              [class.attempted]="slot < attempts">
+            </div>
+          </div>
+        </div>
+
+        <div id="levels-container">
+          <h2 id="levels-title">Decyphered Signals</h2>
+          <div id="levels">
+            <div
+              class="level-box"
+              *ngFor="let level of levelSlots"
+              [class.completed]="level < currentLevel"
+              [class.current]="level === currentLevel">
+              <img src="/assets/images/fingerprint/decyphered.png" [alt]="'Level ' + level">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="choices-container-wrapper">
+        <h2 id="choices-title">Components</h2>
+        <div id="choices-container">
+          <button
+            *ngFor="let choice of choices"
+            class="btn"
+            [class.correct]="choice.state === 'correct'"
+            [class.incorrect]="choice.state === 'incorrect'"
+            [style.background-image]="'url(' + choice.src + ')'"
+            [style.background-size]="'cover'"
+            [style.background-position]="'center'"
+            (click)="onChoiceClick(choice)">
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="progress-bar-container">
+      <div class="progress-bar">
+        <div class="progress" [style.width.%]="progressPercent"></div>
+      </div>
+    </div>
+  </div>
+</div>

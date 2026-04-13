@@ -102,21 +102,17 @@ private readonly ADMIN_USER_KEY = 'admin_user';
     return Number(localStorage.getItem(this.STAGE_KEY) || '0');
   }
 
-  getRedirectRouteByStage(stage: number): string {
-    if (stage === 1) {
-      return '/path-finder';
-    }
-
-    if (stage === 0) {
-      return '/locked';
-    }
-
-    if (stage === 2) {
-      return '/completed';
-    }
-
-    return '/login';
+getRedirectRouteByStage(stage: number): string {
+  if (stage === 0) {
+    return '/locked';
   }
+
+  if (stage >= 1) {
+    return '/dashboard';
+  }
+
+  return '/login';
+}
 
   getRoleFromToken(): string | null {
     const token = this.getToken();

@@ -23,7 +23,7 @@ export const stageGuard: CanActivateFn = (
   const requiredStage = Number(route.data?.['stage'] ?? 0);
   const currentStage = Number(user.stage ?? auth.getStage() ?? 0);
 
-  if (currentStage === requiredStage) {
+  if (currentStage >= requiredStage) {
     return true;
   }
 
@@ -31,13 +31,5 @@ export const stageGuard: CanActivateFn = (
     return router.createUrlTree(['/locked']);
   }
 
-  if (currentStage === 1) {
-    return router.createUrlTree(['/path-finder']);
-  }
-
-  if (currentStage === 2) {
-    return router.createUrlTree(['/completed']);
-  }
-
-  return router.createUrlTree(['/login']);
+  return router.createUrlTree(['/dashboard']);
 };

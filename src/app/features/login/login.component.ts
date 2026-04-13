@@ -73,15 +73,16 @@ export class LoginComponent {
         return;
       }
 
-      const normalizedPlayer = {
-        id: player.id ?? null,
-        stateId: player.state_id ?? player.state_id ?? stateId,
-        role: player.role ?? 'player',
-        progress: Number(player.progress ?? 0),
-        stage: Number(player.stage ?? 0),
-        completedPathFinderAt:
-          player.completed_pathfinder_at ?? player.completed_pathfinder_at ?? null
-      };
+const normalizedPlayer = {
+  id: player.id ?? null,
+  stateId: player.state_id ?? stateId,
+  role: player.role ?? 'player',
+  progress: Number(player.progress ?? 0),
+  stage: Number(player.stage ?? 0),
+
+  completed_pathfinder_at: player.completed_pathfinder_at ?? null,
+  completed_fingerprint_at: player.completed_fingerprint_at ?? null
+};
 
       this.auth.setCurrentUser(normalizedPlayer);
       this.auth.setStage(normalizedPlayer.stage);

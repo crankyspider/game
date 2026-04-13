@@ -11,6 +11,7 @@ export interface Player {
   role?: string;
   createdAt?: string;
   completedPathFinderAt?: string | null;
+  completed_fingerprint_at?: string | null;
 }
 
 @Injectable({
