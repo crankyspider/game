@@ -48,6 +48,8 @@ export class PathFinderComponent implements AfterViewInit, OnDestroy {
   @ViewChild('moveSoundRef') moveSoundRef?: ElementRef<HTMLAudioElement>;
   @ViewChild('completeSoundRef') completeSoundRef?: ElementRef<HTMLAudioElement>;
   @ViewChild('timeoutSoundRef') timeoutSoundRef?: ElementRef<HTMLAudioElement>;
+  private isFinishingGame = false;
+  private hasCompletedGame = false;
 
 
 constructor(
@@ -693,59 +695,80 @@ constructor(
     this.paths[color].completed = false;
   }
 
-  private checkWinCondition(): void {
-    const allPathsCompleted = this.colors.every((color) => this.paths[color].completed);
-
-    if (allPathsCompleted) {
-      if (this.timer) {
-        clearInterval(this.timer);
-        this.timer = null;
-      }
-
-      if (this.blockMoveInterval) {
-        clearInterval(this.blockMoveInterval);
-        this.blockMoveInterval = null;
-      }
-
-      setTimeout(() => {
-  if (this.level < this.levels.length) {
-    this.level++;
-    this.initializeGrid();
-  } else {
- console.log('Game complete - updating Supabase');
-
- const player = this.auth.getCurrentUser();
-
-if (!player) {
-  console.error('No player found');
-  this.router.navigate(['/login']);
-  return;
-}
-
-this.playerService.completePathFinder().then((success) => {
-  if (!success) {
-    console.error('Failed to update stage');
+private checkWinCondition(): void {
+  // 🚨 prevent double execution
+  if (this.isFinishingGame || this.hasCompletedGame) {
     return;
   }
 
-  const updatedPlayer = {
-    ...player,
-    stage: 2,
-    progress: 1,
-    completed_pathfinder_at: new Date().toISOString()
-  };
+  const allPathsCompleted = this.colors.every((color) => this.paths[color].completed);
 
-  this.auth.setCurrentUser(updatedPlayer);
-  this.auth.setStage(2);
-
-  this.router.navigate(['/completed']);
-}).catch((err) => {
-  console.error('Error completing game:', err);
-});
-}
-}, 500);
-    }
+  if (!allPathsCompleted) {
+    return;
   }
+
+  this.isFinishingGame = true;
+
+  // stop timers immediately
+  if (this.timer) {
+    clearInterval(this.timer);
+    this.timer = null;
+  }
+
+  if (this.blockMoveInterval) {
+    clearInterval(this.blockMoveInterval);
+    this.blockMoveInterval = null;
+  }
+
+  setTimeout(async () => {
+    // still leveling
+    if (this.level < this.levels.length) {
+      this.level++;
+      this.isFinishingGame = false;
+      this.initializeGrid();
+      return;
+    }
+
+    console.log('Game complete - updating Supabase');
+
+    const player = this.auth.getCurrentUser();
+
+    if (!player) {
+      console.error('No player found');
+      this.isFinishingGame = false;
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    try {
+      const result = await this.playerService.completePathFinder(8000);
+
+      if (!result.success) {
+        console.error('Failed to update stage');
+        this.isFinishingGame = false;
+        return;
+      }
+
+      // ✅ lock completion permanently
+      this.hasCompletedGame = true;
+
+      const updatedPlayer = {
+        ...player,
+        stage: 2,
+        progress: 1,
+        completed_pathfinder_at: new Date().toISOString()
+      };
+
+      this.auth.setCurrentUser(updatedPlayer);
+      this.auth.setStage(2);
+
+      await this.router.navigate(['/completed']);
+    } catch (err) {
+      console.error('Error completing game:', err);
+      this.isFinishingGame = false;
+    }
+  }, 250); // slightly faster than 500ms
+}
 
 
 }
