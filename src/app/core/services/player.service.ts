@@ -64,36 +64,66 @@ export class PlayerService {
     }
   }
 
-  async completePathFinder(): Promise<boolean> {
-    try {
-      const sessionToken = this.getSessionToken();
+async completePathFinder(timeoutMs = 8000): Promise<{
+  success: boolean;
+  alreadyCompleted?: boolean;
+  sessionExpired?: boolean;
+}> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
-      if (!sessionToken) {
-        console.error('Missing player session token');
-        return false;
-      }
+  try {
+    const sessionToken = this.getSessionToken();
 
-      const response = await fetch(this.completePathfinderUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-player-session': sessionToken
-        }
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        console.error('Complete pathfinder failed:', result);
-        return false;
-      }
-
-      return true;
-    } catch (error) {
-      console.error('Complete pathfinder request error:', error);
-      return false;
+    if (!sessionToken) {
+      console.error('Missing player session token');
+      return { success: false, sessionExpired: true };
     }
+
+    const response = await fetch(this.completePathfinderUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-player-session': sessionToken
+      },
+      signal: controller.signal
+    });
+
+    const result = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      if (response.status === 401) {
+        return { success: false, sessionExpired: true };
+      }
+
+      if (response.status === 200 && result?.alreadyCompleted) {
+        return { success: true, alreadyCompleted: true };
+      }
+
+      if (response.status === 409 || result?.alreadyCompleted) {
+        return { success: true, alreadyCompleted: true };
+      }
+
+      console.error('Complete pathfinder failed:', result);
+      return { success: false };
+    }
+
+    return {
+      success: true,
+      alreadyCompleted: !!result?.alreadyCompleted
+    };
+  } catch (error) {
+    if (error instanceof DOMException && error.name === 'AbortError') {
+      console.error('Complete pathfinder request timed out');
+    } else {
+      console.error('Complete pathfinder request error:', error);
+    }
+
+    return { success: false };
+  } finally {
+    clearTimeout(timeoutId);
   }
+}
 
   getSessionToken(): string | null {
     return localStorage.getItem(this.PLAYER_SESSION_TOKEN_KEY);
