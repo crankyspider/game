@@ -1,0 +1,76 @@
+<div class="background-blur"></div>
+
+<div class="hack-box-container">
+  <div id="title-container">
+    <img src="/assets/images/gamePad.svg" alt="Omen" />
+    <h1>OMEN ANALYSIS</h1>
+    <p>Interpret the signal</p>
+  </div>
+
+  <div id="grid">
+    <div id="omen-panel">
+      <h2 id="symbols-title">SYMBOL SET</h2>
+
+      <div class="symbols">
+        <div class="symbol-card" *ngFor="let s of currentSet">
+          <img [src]="'/assets/images/omen/' + s + '.svg'" [alt]="s" />
+        </div>
+      </div>
+
+      <div id="status-container">
+        <p id="status-label">STREAK {{ streak }} / {{ targetStreak }}</p>
+
+        <p
+          id="status-message"
+          *ngIf="resultMessage"
+          [class.incorrect]="resultMessage.includes('REJECTED')"
+        >
+          {{ resultMessage }}
+        </p>
+      </div>
+
+      <div id="choices-container-wrapper" *ngIf="!isComplete">
+        <h2 id="choices-title">SELECT OMEN TYPE</h2>
+
+        <div id="choices-container">
+          <button
+            class="omen-btn"
+            [class]="getAnswerClass('good')"
+            (click)="choose('good')"
+          >
+            GOOD OMEN
+          </button>
+
+          <button
+            class="omen-btn"
+            [class]="getAnswerClass('none')"
+            (click)="choose('none')"
+          >
+            NO OMEN
+          </button>
+
+          <button
+            class="omen-btn"
+            [class]="getAnswerClass('poor')"
+            (click)="choose('poor')"
+          >
+            POOR OMEN
+          </button>
+        </div>
+      </div>
+
+      <div id="choices-container-wrapper" *ngIf="isComplete">
+        <h2 id="choices-title">SEQUENCE COMPLETE</h2>
+        <div id="status-container">
+          <p id="status-message">The system has accepted your pattern recognition.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="progress-bar-container">
+    <div class="progress-bar">
+      <div class="progress" [style.width.%]="progressPercent"></div>
+    </div>
+  </div>
+</div>

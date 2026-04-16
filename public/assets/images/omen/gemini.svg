@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle"
+        font-family="DejaVu Sans, Noto Sans Symbols 2, Noto Sans Symbols, Symbola, sans-serif"
+        font-size="320" fill="#f7fbff" filter="url(#glow)">♊</text>
+</svg>

@@ -1,0 +1,340 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+app-omen,
+:host {
+  font-family: 'Gilroy', sans-serif;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(rgba(21, 27, 48, 0.97), rgba(21, 27, 48, 0.97));
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  height: 100vh;
+  margin: 0;
+  color: #fff;
+  user-select: none;
+  background-image: url('/assets/images/bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.background-blur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  filter: blur(5px);
+  z-index: -1;
+}
+
+.hack-box-container {
+  position: relative;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 2.5vh auto;
+  width: fit-content;
+  overflow: hidden;
+  max-height: 95vh;
+  max-width: 95vw;
+  background-color: rgb(7, 19, 32);
+}
+
+#grid-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#title-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: rgb(7, 19, 32);
+  padding: 10px 14px;
+  width: min(900px, 95vw);
+  max-width: 100%;
+  border-radius: 0.75rem 0.75rem 0 0;
+  box-sizing: border-box;
+  gap: 8px;
+}
+
+#title-container img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  flex-shrink: 0;
+  margin-right: 8px;
+}
+
+#title-container h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: rgb(127, 255, 191);
+  text-shadow: 0 0 40px rgb(127, 255, 191);
+  font-weight: normal;
+  margin-right: 8px;
+  line-height: 1;
+}
+
+#title-container p {
+  margin: 0;
+  font-size: 1rem;
+  color: rgb(142, 142, 142);
+  line-height: 1;
+}
+
+#grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  justify-content: center;
+  align-items: start;
+  width: min(900px, 95vw);
+  background-color: rgb(22, 40, 52);
+  border-radius: 0.75rem;
+  max-width: 100%;
+  padding: 24px 20px 20px;
+}
+
+#omen-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: rgb(22, 40, 52);
+  border-radius: 10px;
+  width: 100%;
+}
+
+#symbols-title {
+  margin: 0 0 14px;
+  font-size: 1.5rem;
+  color: rgb(84, 255, 164);
+  text-shadow: 0 0 2.1px rgb(127, 255, 191);
+  text-align: center;
+}
+
+.symbols {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+.symbol-card {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(7, 19, 32);
+  border: 0.125rem solid rgba(112, 193, 255, 0.4);
+  border-radius: 0.75rem;
+  padding: 18px;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.symbol-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(127, 255, 191, 0.65);
+  box-shadow: 0 0 18px rgba(127, 255, 191, 0.12);
+}
+
+.symbol-card img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+#status-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 4px 0 10px;
+  min-height: 54px;
+}
+
+#status-label {
+  margin: 0;
+  font-size: 0.95rem;
+  color: rgb(142, 142, 142);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+#status-message {
+  margin: 8px 0 0;
+  font-size: 1.2rem;
+  color: rgb(84, 255, 164);
+  text-shadow: 0 0 2.1px rgb(127, 255, 191);
+  text-align: center;
+}
+
+#status-message.incorrect {
+  color: #ff6b6b;
+  text-shadow: 0 0 12px rgba(255, 107, 107, 0.35);
+}
+
+#choices-container-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 0 0;
+  width: 100%;
+}
+
+#choices-title {
+  margin: 0 0 14px;
+  font-size: 1.5rem;
+  color: rgb(84, 255, 164);
+  text-shadow: 0 0 2.1px rgb(127, 255, 191);
+  text-align: center;
+}
+
+#choices-container {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 14px;
+  width: 100%;
+}
+
+#choices-container button,
+.omen-btn {
+  border: none;
+  min-height: 72px;
+  padding: 14px 18px;
+  background-color: rgb(7, 19, 32);
+  border: 0.125rem solid rgba(112, 193, 255, 0.4);
+  border-radius: 0.5rem;
+  color: #fff;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s, border-color 0.2s;
+}
+
+#choices-container button:hover,
+.omen-btn:hover {
+  background-color: #555;
+  transform: translateY(-2px);
+}
+
+#choices-container button.correct,
+.omen-btn.correct {
+  background-color: green;
+  border-color: green;
+}
+
+#choices-container button.incorrect,
+.omen-btn.incorrect {
+  background-color: red;
+  border-color: red;
+}
+
+.progress-bar-container {
+  width: min(900px, 95vw);
+  display: flex;
+  justify-content: center;
+  background-color: rgb(7, 19, 32);
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 0 0 0.75rem 0.75rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background-color: rgb(15, 27, 33);
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress {
+  height: 100%;
+  background-color: rgb(255, 69, 0);
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: width 0.1s linear;
+}
+
+@media (max-width: 980px) {
+  #title-container,
+  #grid,
+  .progress-bar-container {
+    width: 95vw;
+  }
+
+  .symbols {
+    gap: 14px;
+  }
+
+  .symbol-card {
+    width: 130px;
+    height: 130px;
+  }
+
+  #choices-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  #title-container {
+    flex-wrap: wrap;
+    padding-left: 14px;
+  }
+
+  #title-container h1 {
+    font-size: 1.4rem;
+  }
+
+  #title-container p {
+    width: 100%;
+    margin-top: 6px;
+  }
+
+  #grid {
+    padding: 18px 14px 14px;
+  }
+
+  .symbol-card {
+    width: 105px;
+    height: 105px;
+    padding: 12px;
+  }
+
+  #symbols-title,
+  #choices-title {
+    font-size: 1.2rem;
+  }
+
+  #choices-container button,
+  .omen-btn {
+    min-height: 64px;
+    font-size: 0.92rem;
+  }
+}

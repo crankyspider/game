@@ -8,7 +8,10 @@ type GameCard = {
   description: string;
   route?: string;
   requiredStage: number;
-  completionKey?: 'completed_pathfinder_at' | 'completed_fingerprint_at';
+    completionKey?: 
+    | 'completed_pathfinder_at'
+    | 'completed_fingerprint_at'
+    | 'completed_omen_at';
   exists: boolean;
 };
 
@@ -41,30 +44,31 @@ export class DashboardComponent {
     route: '/fingerprint',
     requiredStage: 2,
     completionKey: 'completed_fingerprint_at',
+    exists: true
+  },
+{
+  title: 'XXXX XXXXXX',
+  description: 'XXXXXX XXXX XXXXX XXXX',
+  requiredStage: 3,
+  completionKey: 'completed_omen_at',
+  exists:false
+},
+  {
+   title: 'XXXX XXXXXX',
+  description: 'XXXXXX XXXX XXXXX XXXX',
+  requiredStage: 4,
     exists: false
   },
   {
-    title: 'Signal Trace',
-    description: 'Recover the hidden pattern buried in corrupted data.',
-    requiredStage: 3,
+    title: 'XXXX XXXXXX',
+  description: 'XXXXXX XXXX XXXXX XXXX',
+  requiredStage: 5,
     exists: false
   },
   {
-    title: 'Cipher Vault',
-    description: 'Break the sequence and unlock the protected archive.',
-    requiredStage: 4,
-    exists: false
-  },
-  {
-    title: 'Memory Weave',
-    description: 'Reconstruct the fractured chain before it collapses.',
-    requiredStage: 5,
-    exists: false
-  },
-  {
-    title: 'Final Protocol',
-    description: 'Complete the last trial and reveal the core signal.',
-    requiredStage: 6,
+    title: 'XXXX XXXXXX',
+  description: 'XXXXXX XXXX XXXXX XXXX',
+  requiredStage: 6,
     exists: false
   }
 ];
