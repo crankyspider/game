@@ -45,8 +45,7 @@ export class OmenComponent implements OnInit {
 
   private isCompleting = false;
 
-  readonly successSound = new Audio('/assets/audio/success.mp3');
-  readonly wrongSound = new Audio('/assets/audio/wrong.mp3');
+  testRound = 0;
 
   readonly allSymbols: AstroSymbol[] = [
     'fire', 'water', 'earth', 'air',
@@ -113,25 +112,16 @@ export class OmenComponent implements OnInit {
   isComplete = false;
 
   ngOnInit(): void {
-    this.preloadSounds();
+    console.clear();
+
+    console.log('======================================');
+    console.log('OMEN TEST MODE STARTED');
+    console.log('Required streak:', this.targetStreak);
+    console.log('Current saved stage:', this.auth.getStage());
+    console.log('Current saved user:', this.auth.getCurrentUser());
+    console.log('======================================');
+
     this.generateRound();
-  }
-
-  private preloadSounds(): void {
-    this.successSound.preload = 'auto';
-    this.wrongSound.preload = 'auto';
-
-    this.successSound.load();
-    this.wrongSound.load();
-  }
-
-  private async playSound(sound: HTMLAudioElement): Promise<void> {
-    try {
-      sound.currentTime = 0;
-      await sound.play();
-    } catch {
-      // Ignore browser audio playback errors.
-    }
   }
 
   generateRound(): void {
@@ -143,6 +133,40 @@ export class OmenComponent implements OnInit {
     this.selectedAnswer = null;
     this.lastCorrectAnswer = null;
     this.isLocked = false;
+
+    this.testRound++;
+
+    const score = this.getRoundScore(this.currentSet);
+    const correctAnswer = this.determineOmen(this.currentSet);
+
+    console.log('');
+    console.log('======================================');
+    console.log(`OMEN ROUND ${this.testRound}`);
+    console.log('======================================');
+
+    console.log('Symbols:', this.currentSet);
+
+    console.log(
+      'Values:',
+      this.currentSet.map(
+        symbol => `${symbol} = ${this.symbolValues[symbol]}`
+      )
+    );
+
+    console.log('Total score:', score);
+
+    console.log(
+      'CORRECT ANSWER:',
+      this.getOmenLabel(correctAnswer)
+    );
+
+    console.log(
+      'Current streak:',
+      `${this.streak} / ${this.targetStreak}`
+    );
+
+    console.log('======================================');
+    console.log('');
   }
 
   choose(answer: OmenResult): void {
@@ -163,21 +187,44 @@ export class OmenComponent implements OnInit {
 
     this.lastCorrectAnswer = correctAnswer;
 
+    console.log('');
+    console.log('------------ ANSWER CHECK ------------');
+
+    console.log(
+      'Selected:',
+      this.getOmenLabel(answer)
+    );
+
+    console.log(
+      'Correct:',
+      this.getOmenLabel(correctAnswer)
+    );
+
+    console.log('Score:', score);
+
     if (answer === correctAnswer) {
       this.streak++;
 
-      void this.playSound(this.successSound);
-
       this.resultMessage =
         `✔ SIGNAL ACCEPTED\n${feedback}`;
+
+      console.log('RESULT: ✅ CORRECT');
     } else {
       this.streak = 0;
 
-      void this.playSound(this.wrongSound);
-
       this.resultMessage =
         `✖ SIGNAL REJECTED — ${this.getOmenLabel(correctAnswer)}\n${feedback}`;
+
+      console.log('RESULT: ❌ INCORRECT');
     }
+
+    console.log(
+      'Streak:',
+      `${this.streak} / ${this.targetStreak}`
+    );
+
+    console.log('--------------------------------------');
+    console.log('');
 
     if (this.streak >= this.targetStreak) {
       void this.onGameComplete();
@@ -186,7 +233,7 @@ export class OmenComponent implements OnInit {
 
     setTimeout(() => {
       this.generateRound();
-    }, 2300);
+    }, 1200);
   }
 
   private async onGameComplete(): Promise<void> {
@@ -197,14 +244,40 @@ export class OmenComponent implements OnInit {
 
     this.resultMessage = '✔ SEQUENCE COMPLETE';
 
+    console.log('');
+    console.log('======================================');
+    console.log('OMEN GAME COMPLETE');
+    console.log('======================================');
+
+    console.log('Starting Supabase completion request...');
+    console.log('Expected DB update:');
+    console.log('stage: 3 -> 4');
+    console.log('progress: -> 3');
+    console.log('completed_omen_at: timestamp');
+    console.log('======================================');
+
     try {
       const sessionToken =
         localStorage.getItem('player_session_token');
 
       if (!sessionToken) {
+        console.error('❌ Missing player_session_token');
+
+        console.log(
+          'localStorage keys:',
+          Object.keys(localStorage)
+        );
+
         await this.router.navigate(['/dashboard']);
         return;
       }
+
+      console.log('✅ player_session_token found');
+
+      console.log(
+        'Calling:',
+        'https://lbwnyctnyyztfxbiwvoj.supabase.co/functions/v1/complete-omen'
+      );
 
       const response = await fetch(
         'https://lbwnyctnyyztfxbiwvoj.supabase.co/functions/v1/complete-omen',
@@ -223,16 +296,121 @@ export class OmenComponent implements OnInit {
         }
       );
 
+      console.log('');
+      console.log('---------- SUPABASE RESPONSE ----------');
+
+      console.log(
+        'HTTP status:',
+        response.status
+      );
+
+      console.log(
+        'HTTP ok:',
+        response.ok
+      );
+
       const result =
         (await response.json()) as CompleteOmenResponse;
+
+      console.log(
+        'Raw response:',
+        result
+      );
 
       if (
         !response.ok ||
         !result.success ||
         !result.player
       ) {
+        console.error('❌ OMEN COMPLETION FAILED');
+
+        console.error(
+          'Response body:',
+          result
+        );
+
+        console.log('---------------------------------------');
+
         await this.router.navigate(['/dashboard']);
         return;
+      }
+
+      console.log('✅ SUPABASE FUNCTION SUCCESS');
+
+      console.log(
+        'Already completed:',
+        result.alreadyCompleted ?? false
+      );
+
+      console.log(
+        'Player ID:',
+        result.player.id
+      );
+
+      console.log(
+        'State ID:',
+        result.player.state_id
+      );
+
+      console.log(
+        'Role:',
+        result.player.role
+      );
+
+      console.log(
+        'Stage returned:',
+        result.player.stage
+      );
+
+      console.log(
+        'Progress returned:',
+        result.player.progress
+      );
+
+      console.log(
+        'Path Finder completed:',
+        result.player.completed_pathfinder_at
+      );
+
+      console.log(
+        'Fingerprint completed:',
+        result.player.completed_fingerprint_at
+      );
+
+      console.log(
+        'Omen completed:',
+        result.player.completed_omen_at
+      );
+
+      console.log('---------------------------------------');
+
+      if (Number(result.player.stage) === 4) {
+        console.log('✅ STAGE TEST PASSED: player is stage 4');
+      } else {
+        console.warn(
+          '⚠️ STAGE TEST FAILED: expected stage 4, received',
+          result.player.stage
+        );
+      }
+
+      if (Number(result.player.progress) === 3) {
+        console.log('✅ PROGRESS TEST PASSED: progress is 3');
+      } else {
+        console.warn(
+          '⚠️ PROGRESS TEST FAILED: expected progress 3, received',
+          result.player.progress
+        );
+      }
+
+      if (result.player.completed_omen_at) {
+        console.log(
+          '✅ OMEN TIMESTAMP TEST PASSED:',
+          result.player.completed_omen_at
+        );
+      } else {
+        console.warn(
+          '⚠️ OMEN TIMESTAMP TEST FAILED: completed_omen_at is missing'
+        );
       }
 
       const normalizedPlayer = {
@@ -261,17 +439,56 @@ export class OmenComponent implements OnInit {
           result.player.completed_omen_at ?? null
       };
 
+      console.log('');
+      console.log('---------- LOCAL STORAGE ----------');
+
+      console.log(
+        'Normalized player:',
+        normalizedPlayer
+      );
+
       this.auth.setCurrentUser(normalizedPlayer);
 
       this.auth.setStage(
         normalizedPlayer.stage
       );
 
+      console.log(
+        'Saved stage:',
+        this.auth.getStage()
+      );
+
+      console.log(
+        'Saved user:',
+        this.auth.getCurrentUser()
+      );
+
+      if (this.auth.getStage() === 4) {
+        console.log(
+          '✅ LOCAL STORAGE STAGE TEST PASSED'
+        );
+      } else {
+        console.warn(
+          '⚠️ LOCAL STORAGE STAGE TEST FAILED'
+        );
+      }
+
+      console.log('-----------------------------------');
+      console.log('');
+      console.log('✅ FULL OMEN COMPLETION FLOW FINISHED');
+      console.log('');
+
       this.isComplete = true;
 
       await this.router.navigate(['/dashboard']);
 
-    } catch {
+    } catch (error) {
+      console.error('');
+      console.error('======================================');
+      console.error('❌ OMEN COMPLETION EXCEPTION');
+      console.error(error);
+      console.error('======================================');
+
       await this.router.navigate(['/dashboard']);
     }
   }

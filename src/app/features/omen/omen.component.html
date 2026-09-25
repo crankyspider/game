@@ -3,8 +3,19 @@
 <div class="hack-box-container">
   <div id="title-container">
     <img src="/assets/images/gamePad.svg" alt="Omen" />
+
     <h1>OMEN ANALYSIS</h1>
+
     <p>Interpret the signal</p>
+
+    <button
+      type="button"
+      class="info-button"
+      (click)="toggleLegend()"
+      aria-label="Open symbol legend"
+    >
+      i
+    </button>
   </div>
 
   <div id="grid">
@@ -12,13 +23,21 @@
       <h2 id="symbols-title">SYMBOL SET</h2>
 
       <div class="symbols">
-        <div class="symbol-card" *ngFor="let s of currentSet">
-          <img [src]="'/assets/images/omen/' + s + '.svg'" [alt]="s" />
+        <div
+          class="symbol-card"
+          *ngFor="let s of currentSet"
+        >
+          <img
+            [src]="'/assets/images/omen/' + s + '.svg'"
+            [alt]="s"
+          />
         </div>
       </div>
 
       <div id="status-container">
-        <p id="status-label">STREAK {{ streak }} / {{ targetStreak }}</p>
+        <p id="status-label">
+          STREAK {{ streak }} / {{ targetStreak }}
+        </p>
 
         <p
           id="status-message"
@@ -29,8 +48,13 @@
         </p>
       </div>
 
-      <div id="choices-container-wrapper" *ngIf="!isComplete">
-        <h2 id="choices-title">SELECT OMEN TYPE</h2>
+      <div
+        id="choices-container-wrapper"
+        *ngIf="!isComplete"
+      >
+        <h2 id="choices-title">
+          SELECT OMEN TYPE
+        </h2>
 
         <div id="choices-container">
           <button
@@ -59,10 +83,18 @@
         </div>
       </div>
 
-      <div id="choices-container-wrapper" *ngIf="isComplete">
-        <h2 id="choices-title">SEQUENCE COMPLETE</h2>
+      <div
+        id="choices-container-wrapper"
+        *ngIf="isComplete"
+      >
+        <h2 id="choices-title">
+          SEQUENCE COMPLETE
+        </h2>
+
         <div id="status-container">
-          <p id="status-message">The system has accepted your pattern recognition.</p>
+          <p id="status-message">
+            The system has accepted your pattern recognition.
+          </p>
         </div>
       </div>
     </div>
@@ -70,7 +102,423 @@
 
   <div class="progress-bar-container">
     <div class="progress-bar">
-      <div class="progress" [style.width.%]="progressPercent"></div>
+      <div
+        class="progress"
+        [style.width.%]="progressPercent"
+      ></div>
+    </div>
+  </div>
+</div>
+
+<!-- SYMBOL LEGEND MODAL -->
+<div
+  class="legend-overlay"
+  *ngIf="showLegend"
+  (click)="closeLegend()"
+>
+  <div
+    class="legend-modal"
+    (click)="$event.stopPropagation()"
+  >
+    <div class="legend-header">
+      <div>
+        <h2>OMEN SYMBOL LEGEND</h2>
+        <p>Reference values used during signal analysis.</p>
+      </div>
+
+      <button
+        type="button"
+        class="legend-close"
+        (click)="closeLegend()"
+        aria-label="Close symbol legend"
+      >
+        ×
+      </button>
+    </div>
+
+    <!-- ELEMENTS -->
+    <div class="legend-section">
+      <h3>ELEMENTS</h3>
+
+      <div class="legend-grid">
+        <div class="legend-item">
+          <div class="legend-symbol">
+            <img
+              src="/assets/images/omen/fire.svg"
+              alt="Fire"
+            />
+            <span>Fire</span>
+          </div>
+
+          <span class="legend-value positive">
+            +2
+          </span>
+        </div>
+
+        <div class="legend-item">
+          <div class="legend-symbol">
+            <img
+              src="/assets/images/omen/water.svg"
+              alt="Water"
+            />
+            <span>Water</span>
+          </div>
+
+          <span class="legend-value unknown">
+            ?
+          </span>
+        </div>
+
+        <div class="legend-item">
+          <div class="legend-symbol">
+            <img
+              src="/assets/images/omen/earth.svg"
+              alt="Earth"
+            />
+            <span>Earth</span>
+          </div>
+
+          <span class="legend-value unknown">
+            ?
+          </span>
+        </div>
+
+        <div class="legend-item">
+          <div class="legend-symbol">
+            <img
+              src="/assets/images/omen/air.svg"
+              alt="Air"
+            />
+            <span>Air</span>
+          </div>
+
+          <span class="legend-value unknown">
+            ?
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLANETARY SYMBOLS -->
+    <div class="legend-section">
+      <h3>PLANETARY SYMBOLS</h3>
+
+      <div class="legend-grid">
+        <div class="legend-item">
+          <div class="legend-symbol">
+            <img
+              src="/assets/images/omen/sun.svg"
+              alt="Sun"
+            />
+            <span>Sun</span>
+          </div>
+
+          <span class="legend-value unknown">
+            ?
+          </span>
+        </div>
+
+        <div class="legend-item">
+          <div class="legend-symbol">
+            <img
+              src="/assets/images/omen/moon.svg"
+              alt="Moon"
+            />
+            <span>Moon</span>
+          </div>
+
+          <span class="legend-value unknown">
+            ?
+          </span>
+        </div>
+
+        <div class="legend-item">
+          <div class="legend-symbol">
+            <img
+              src="/assets/images/omen/mercury.svg"
+              alt="Mercury"
+            />
+            <span>Mercury</span>
+          </div>
+
+          <span class="legend-value unknown">
+            ?
+          </span>
+        </div>
+
+        <div class="legend-item">
+          <div class="legend-symbol">
+            <img
+              src="/assets/images/omen/venus.svg"
+              alt="Venus"
+            />
+            <span>Venus</span>
+          </div>
+
+          <span class="legend-value unknown">
+            ?
+          </span>
+        </div>
+
+        <div class="legend-item">
+          <div class="legend-symbol">
+            <img
+              src="/assets/images/omen/mars.svg"
+              alt="Mars"
+            />
+            <span>Mars</span>
+          </div>
+
+          <span class="legend-value unknown">
+            ?
+          </span>
+        </div>
+
+        <div class="legend-item">
+          <div class="legend-symbol">
+            <img
+              src="/assets/images/omen/jupiter.svg"
+              alt="Jupiter"
+            />
+            <span>Jupiter</span>
+          </div>
+
+          <span class="legend-value unknown">
+            ?
+          </span>
+        </div>
+
+        <div class="legend-item">
+          <div class="legend-symbol">
+            <img
+              src="/assets/images/omen/saturn.svg"
+              alt="Saturn"
+            />
+            <span>Saturn</span>
+          </div>
+
+          <span class="legend-value unknown">
+            ?
+          </span>
+        </div>
+
+        <div class="legend-item">
+          <div class="legend-symbol">
+            <img
+              src="/assets/images/omen/uranus.svg"
+              alt="Uranus"
+            />
+            <span>Uranus</span>
+          </div>
+
+          <span class="legend-value neutral">
+            0
+          </span>
+        </div>
+
+        <div class="legend-item">
+          <div class="legend-symbol">
+            <img
+              src="/assets/images/omen/neptune.svg"
+              alt="Neptune"
+            />
+            <span>Neptune</span>
+          </div>
+
+          <span class="legend-value unknown">
+            ?
+          </span>
+        </div>
+
+        <div class="legend-item">
+          <div class="legend-symbol">
+            <img
+              src="/assets/images/omen/pluto.svg"
+              alt="Pluto"
+            />
+            <span>Pluto</span>
+          </div>
+
+          <span class="legend-value unknown">
+            ?
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ZODIAC SYMBOLS -->
+    <div class="legend-section">
+      <h3>ZODIAC SYMBOLS</h3>
+
+      <div class="legend-grid">
+        <div class="legend-item">
+          <div class="legend-symbol">
+            <img
+              src="/assets/images/omen/aries.svg"
+              alt="Aries"
+            />
+            <span>Aries</span>
+          </div>
+
+          <span class="legend-value positive">
+            +1
+          </span>
+        </div>
+
+        <div class="legend-item">
+          <div class="legend-symbol">
+            <img
+              src="/assets/images/omen/taurus.svg"
+              alt="Taurus"
+            />
+            <span>Taurus</span>
+          </div>
+
+          <span class="legend-value unknown">
+            ?
+          </span>
+        </div>
+
+        <div class="legend-item">
+          <div class="legend-symbol">
+            <img
+              src="/assets/images/omen/gemini.svg"
+              alt="Gemini"
+            />
+            <span>Gemini</span>
+          </div>
+
+          <span class="legend-value unknown">
+            ?
+          </span>
+        </div>
+
+        <div class="legend-item">
+          <div class="legend-symbol">
+            <img
+              src="/assets/images/omen/cancer.svg"
+              alt="Cancer"
+            />
+            <span>Cancer</span>
+          </div>
+
+          <span class="legend-value unknown">
+            ?
+          </span>
+        </div>
+
+        <div class="legend-item">
+          <div class="legend-symbol">
+            <img
+              src="/assets/images/omen/leo.svg"
+              alt="Leo"
+            />
+            <span>Leo</span>
+          </div>
+
+          <span class="legend-value unknown">
+            ?
+          </span>
+        </div>
+
+        <div class="legend-item">
+          <div class="legend-symbol">
+            <img
+              src="/assets/images/omen/virgo.svg"
+              alt="Virgo"
+            />
+            <span>Virgo</span>
+          </div>
+
+          <span class="legend-value unknown">
+            ?
+          </span>
+        </div>
+
+        <div class="legend-item">
+          <div class="legend-symbol">
+            <img
+              src="/assets/images/omen/libra.svg"
+              alt="Libra"
+            />
+            <span>Libra</span>
+          </div>
+
+          <span class="legend-value unknown">
+            ?
+          </span>
+        </div>
+
+        <div class="legend-item">
+          <div class="legend-symbol">
+            <img
+              src="/assets/images/omen/scorpio.svg"
+              alt="Scorpio"
+            />
+            <span>Scorpio</span>
+          </div>
+
+          <span class="legend-value unknown">
+            ?
+          </span>
+        </div>
+
+        <div class="legend-item">
+          <div class="legend-symbol">
+            <img
+              src="/assets/images/omen/sagittarius.svg"
+              alt="Sagittarius"
+            />
+            <span>Sagittarius</span>
+          </div>
+
+          <span class="legend-value unknown">
+            ?
+          </span>
+        </div>
+
+        <div class="legend-item">
+          <div class="legend-symbol">
+            <img
+              src="/assets/images/omen/capricorn.svg"
+              alt="Capricorn"
+            />
+            <span>Capricorn</span>
+          </div>
+
+          <span class="legend-value unknown">
+            ?
+          </span>
+        </div>
+
+        <div class="legend-item">
+          <div class="legend-symbol">
+            <img
+              src="/assets/images/omen/aquarius.svg"
+              alt="Aquarius"
+            />
+            <span>Aquarius</span>
+          </div>
+
+          <span class="legend-value unknown">
+            ?
+          </span>
+        </div>
+
+        <div class="legend-item">
+          <div class="legend-symbol">
+            <img
+              src="/assets/images/omen/pisces.svg"
+              alt="Pisces"
+            />
+            <span>Pisces</span>
+          </div>
+
+          <span class="legend-value unknown">
+            ?
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 </div>

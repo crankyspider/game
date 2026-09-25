@@ -47,11 +47,12 @@ export class DashboardComponent {
     exists: true
   },
 {
-  title: 'XXXX XXXXXX',
-  description: 'XXXXXX XXXX XXXXX XXXX',
+  title: 'Omen',
+  description: 'Learn the pattern. Trust the evidence.',
+  route: '/omen',
   requiredStage: 3,
   completionKey: 'completed_omen_at',
-  exists:false
+  exists:true
 },
   {
    title: 'XXXX XXXXXX',
