@@ -64,7 +64,11 @@ export class LoginComponent {
     try {
       this.isSubmitting = true;
 
-      const player = await this.playerService.login(stateId, codePart1, codePart2);
+      const player = await this.playerService.login(
+        stateId,
+        codePart1,
+        codePart2
+      );
 
       console.log('PLAYER LOGIN RESULT:', player);
 
@@ -73,16 +77,17 @@ export class LoginComponent {
         return;
       }
 
-const normalizedPlayer = {
-  id: player.id ?? null,
-  stateId: player.state_id ?? stateId,
-  role: player.role ?? 'player',
-  progress: Number(player.progress ?? 0),
-  stage: Number(player.stage ?? 0),
+      const normalizedPlayer = {
+        id: player.id ?? null,
+        stateId: player.state_id ?? stateId,
+        role: player.role ?? 'player',
+        progress: Number(player.progress ?? 0),
+        stage: Number(player.stage ?? 0),
 
-  completed_pathfinder_at: player.completed_pathfinder_at ?? null,
-  completed_fingerprint_at: player.completed_fingerprint_at ?? null
-};
+        completed_pathfinder_at: player.completed_pathfinder_at ?? null,
+        completed_fingerprint_at: player.completed_fingerprint_at ?? null,
+        completed_omen_at: player.completed_omen_at ?? null
+      };
 
       this.auth.setCurrentUser(normalizedPlayer);
       this.auth.setStage(normalizedPlayer.stage);
@@ -92,10 +97,14 @@ const normalizedPlayer = {
 
       this.statusMessage = 'Access granted.';
 
-      const route = this.auth.getRedirectRouteByStage(normalizedPlayer.stage);
+      const route = this.auth.getRedirectRouteByStage(
+        normalizedPlayer.stage
+      );
+
       console.log('LOGIN REDIRECT ROUTE:', route);
 
       const navigated = await this.router.navigateByUrl(route);
+
       console.log('NAVIGATION RESULT:', navigated);
 
       if (!navigated) {

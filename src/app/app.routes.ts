@@ -11,6 +11,7 @@ import { adminGuard } from './core/guards/admin.guard';
 import { FingerprintComponent } from './features/fingerprint/fingerprint.component';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { OmenComponent } from './features/omen/omen.component';
+import { FindMeComponent } from './features/find-me/find-me.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -44,6 +45,12 @@ export const routes: Routes = [
   data: { stage: 3 }
 },
 
+{
+    path: 'FindMe',
+    component: FindMeComponent,
+    canActivate: [authGuard, stageGuard],
+    data: { stage: 11 }
+  },
 
 
   

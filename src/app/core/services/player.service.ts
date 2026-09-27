@@ -8,6 +8,7 @@ export interface Player {
   stage: number;
   completed_pathfinder_at: string | null;
   completed_fingerprint_at?: string | null;
+  completed_omen_at?: string | null;
 }
 
 interface LoginPlayerResponse {

@@ -107,6 +107,10 @@ getRedirectRouteByStage(stage: number): string {
     return '/locked';
   }
 
+  if (stage === 11) {
+    return '/FindMe';
+  }
+
   if (stage >= 1) {
     return '/dashboard';
   }
